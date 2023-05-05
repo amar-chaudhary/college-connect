@@ -334,6 +334,11 @@
   background-color: #030E81;
 }
 
+.stream__actions button {
+  background-color: #111;
+}
+
+
 #join-btn{
   background-color: #030E81;
   font-size: 18px;
