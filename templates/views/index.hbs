@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Home</title>
+</head>
+<style>
+    .heading {
+        text-align: center;
+        margin: 20px;
+        font-size: 50px;
+    }
+
+    .inner-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    img {
+        height: 600px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        {{>navbar}}
+        <div id="content">
+            <h1 class="heading">Welcome Student</h1>
+            <div class="inner-container">
+                <div class="box-1">
+                    <img src="images/logo.png" style="height:300px; padding-top:10%">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

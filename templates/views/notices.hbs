@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Home</title>
+</head>
+<style>
+    .box {
+        margin: 10px;
+        width: 70%;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    }
+
+    .username {
+        font-size: 18px;
+        margin: 5px;
+    }
+
+    .msg {
+        margin: 0px 10px;
+        font-size: 25px;
+    }
+
+    .date {
+        padding: 10px 10px;
+        font-size: 15px;
+    }
+
+    .side-btn {
+        display: block;
+        padding: 10px 20px;
+        width: 50%;
+        margin: 20px auto;
+        color: white;
+        background: #030E81;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        font-size: 14px;
+    }
+
+    .side-btn:hover {
+        cursor: pointer;
+    }
+
+    .text {
+        width: 90%;
+        display: block;
+        margin: 10px auto;
+        padding: 16px;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div class="container">
+        {{#if teacher}}
+        {{>trnavbar}}
+        {{else}}
+        {{>navbar}}
+        {{/if}}
+
+        <div id="content">
+                <h1 style="text-align: center;">NOTICES</h1>
+                {{#if teacher}}
+                <form action="/notices" method="post">
+                    <input class="text" type="text" name="message" placeholder="Type your message here.." required>
+
+                    <button class="side-btn" type="submit">POST</button>
+                </form>
+                {{/if}}
+                {{#each rows}}
+                <div class="box">
+                    <div class="username">{{this.email}}</div>
+                    <div class="msg">{{this.msg}}</div>
+                    <div class="date">{{this.date}}</div>
+                </div>
+
+                {{/each}}
+            
+
+        </div>
+    </div>
+
+</body>
+
+</html>

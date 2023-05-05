@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Teams</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</head>
+<style>
+    #form {
+        text-align: center;
+    }
+
+    #heading{
+        margin: 20px;
+    }
+
+    .form-input{
+    padding: 10px;
+    }
+    label{
+font-size: 20px;
+    margin: 10px;
+    }
+    input{
+    padding: 10px 20px;
+    width: 200px;
+    }
+    .side-btn{
+       display: block;
+    padding: 10px 20px;
+    width: 50%;
+    margin: 40px auto;
+    color: white;
+    background: #030E81;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    font-size: 14px;
+   }
+   .side-btn:hover{
+       cursor: pointer;
+   }
+</style>
+
+<body>
+    <div class="container">
+        {{>trnavbar}}
+        <div id="content">
+            <p id="email" style="display: none;">{{tremail}}</p>
+            <form id="form">
+                <div id="form-inside">
+                    <h1 class="heading">Create Team</h1>
+                    <div class="form-input">
+                        <label>Team Name: </label>
+                        <input type="text" name="team-name" required placeholder="Team Name">
+                    </div>
+                    <div class="form-input">
+                        <label>Team Description</label>
+                    <input type="text" name="team-desc">
+                    </div>
+                    <div id="add-student" class="form-input">
+                        <label>Add Students</label>
+                        <input type="text" name="team-mem">
+                    </div>
+                    
+                    
+                </div>
+
+                <button id="addMore"class="side-btn" >Add more Students</button>
+                <button id="create" class="side-btn" type="submit">Create</button>
+            </form>
+            <p id="message" style="text-align: center;font-size: 20px;color: green;"></p>
+        </div>
+    </div>
+    <script>
+        document.getElementById("addMore").addEventListener("click", (e) => {
+            e.preventDefault();
+            console.log("clicked")
+            content = document.getElementById("add-student");
+            var ele = document.createElement("input");
+            ele.setAttribute("name", "team-mem");
+            content.appendChild(ele);
+        })
+        const teacher = document.getElementById("email").textContent;
+        console.log("teacher email",teacher)
+        document.getElementById("create").addEventListener("click", (e) => {
+            e.preventDefault();
+            teamName = document.getElementsByName("team-name")[0].value;
+            teamDesc = document.getElementsByName("team-desc")[0].value;
+            teamMem = document.getElementsByName("team-mem");
+
+            msg = document.getElementById("message");
+            msg.innerText = "Creating team....";
+            console.log(teamMem)
+            const teamData = {
+                teamName,
+                teamDesc
+            }
+            $.post("/create-team", teamData,
+                function (data, status) {
+                    return false;
+                });
+            for (const it of teamMem) {
+                const teamMem = {
+                    teamName,
+                    memb: it.value
+                }
+                $.post("/add-student", teamMem,
+                    function (data, status) {
+                        return false;
+                    });
+            }
+            
+            const teacherData = {
+                teamName,
+                teacher
+            }
+            $.post("/add-teacher", teacherData,
+                function (data, status) {
+                    return false;
+                });
+            msg.innerText = "Team created....";
+
+        })
+    </script>
+</body>
+
+</html>

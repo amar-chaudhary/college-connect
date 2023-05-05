@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Home</title>
+    <style>
+        .pop-container {
+            padding: 10px;
+            margin: 20px;
+            box-shadow: rgb(0 0 0 / 16%) 0px 3px 6px, rgb(0 0 0 / 23%) 0px 3px 6px;
+        }
+
+        .fields {}
+
+        button {
+            background-color: #030E81;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        a{
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        {{>navbar}}
+        <div id="content">
+            <h1 style="text-align: center;">Assignment</h1>
+            {{#if asgmt}}
+            {{#each asgmt}}
+            <div class="pop-container">
+                <h2 class="fields">{{this.teamname}}</h2>
+                <h2 class="fields">{{this.assignment-name}}</h2>
+                <h4 class="fields">{{this.assignment-desc}}</h4>
+                <h4 class="fields">Due Date : {{this.duedate}}</h4>
+                <button><a class="join" href="#">Submit</a></button>
+            </div>
+            {{/each}}
+            {{else}}
+            <h2>No Assignment</h2>
+            {{/if}}
+        </div>
+    </div>
+
+</body>
+
+</html>

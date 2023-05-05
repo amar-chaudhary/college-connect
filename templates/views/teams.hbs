@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Teams</title>
+</head>
+<style>
+    .card {
+        /* Add shadows to create the "card" effect */
+        box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+        transition: 0.3s;
+        width: 250px;
+        margin: 20px;
+        padding-bottom: 10px;
+    }
+
+    /* On mouse-over, add a deeper shadow */
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    /* Add some padding inside the card container */
+    .card-container {
+        padding: 2px 16px;
+    }
+
+    #head {
+        color: black;
+        text-align: center;
+    }
+
+    img {
+        margin: auto;
+    }
+
+    .teams {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .side-btn {
+        display: block;
+        padding: 10px 20px;
+        width: 50%;
+        margin: 40px auto;
+        color: white;
+        background: #030E81;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        font-size: 14px;
+    }
+
+    .side-btn:hover {
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <div class="container">
+        {{#if teacher}}
+        {{>trnavbar}}
+        {{else}}
+        {{>navbar}}
+        {{/if}}
+        <div id="content">
+            <h1 id="head">Your Teams</h1>
+            {{#if teacher}}
+            <div>
+                <a href="/create-teams"><button class="side-btn">Create Team</button></a>
+            </div>
+            {{/if}}
+            <div class="teams">
+                {{#if rows}}
+                {{#each rows}}
+                <div class="card">
+                    <div class="card-container">
+                        <a href="/team-info?team_name={{this.team_name}}">
+                            <img src="images/mini-logo.png" alt="mini-logo" style="width:100%">
+                            <h4><b>{{this.team_name}}</b></h4>
+                        </a>
+                        {{!-- <p>Architect & Engineer</p> --}}
+                    </div>
+                </div>
+                {{/each}}
+                {{else}}
+                <h1>You are added in no Team</h1>
+                {{/if}}
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pop-up.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <title>Teams</title>
+</head>
+<style>
+    .inner-container {
+        display: flex;
+        margin: 10px;
+        height: 90vh;
+    }
+
+    .left {
+        width: 40%;
+        box-shadow: 0 15px 20px 0 rgb(0 0 0 / 30%);
+            margin: 10px;
+        padding: 10px;
+
+    }
+
+    .mid {
+        width: 40%;
+        box-shadow: 0 15px 20px 0 rgb(0 0 0 / 30%);
+        margin: 10px;
+        padding: 10px;
+    }
+
+    .right {
+        width: 20%;
+        box-shadow: 0 15px 20px 0 rgb(0 0 0 / 30%);
+        margin: 10px;
+        padding: 10px;
+        overflow: auto;
+    }
+    
+
+    .side-btn {
+        display: block;
+        padding: 20px 30px;
+        width: 95%;
+        margin: 40px auto;
+        color: white;
+        background: #030E81;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        font-size: 14px;
+    }
+
+    .side-btn:hover {
+        cursor: pointer;
+    }
+
+    .students {
+        padding: 5px 10px;
+        font-size: 20px;
+    }
+
+    .team-name {
+        text-align: center;
+        padding: 5px 0px;
+    }
+
+    h2 {
+        text-align: center;
+        padding: 10px 0px;
+    }
+
+    .assign-box {
+        border: 1px solid black;
+        padding: 10px;
+        border-radius: 20px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        {{#if teacher}}
+        {{>trnavbar}}
+        {{else}}
+        {{>navbar}}
+        {{/if}}
+        <div id="content">
+            <h1 class="team-name">{{teamname}}</h1>
+            <div class="inner-container">
+                <div class="left">
+                    <h1>Teachers</h1>
+                    {{#each teachers}}
+                    <p class="students">{{this.email}}</p>
+                    {{/each}}
+                </div>
+                <div class="mid">
+                    <h1>Students</h1>
+                    {{#each students}}
+                    <p class="students">{{this.member}}</p>
+                    {{/each}}
+                </div>
+                <div class="right">
+                    {{#if teacher}}
+                    <button class="side-btn"
+                        onclick="document.getElementById('createAssignment').style.display='block'">Create
+                        Assignment</button>
+                    <button class="side-btn" onclick="document.getElementById('addMembers').style.display='block'">Add
+                        Members</button>
+                    <button class="side-btn">View Assignments</button>
+                    <button class="side-btn" onclick="document.getElementById('setmeeting').style.display='block'">Set
+                        Meeting</button>
+                    <button class="side-btn"
+                        onclick="document.getElementById('upload-notes').style.display='block'">Upload Notes</button>
+                    {{else}}
+                    <button class="side-btn"
+                        onclick="document.getElementById('submitAssignment').style.display='block'">Submit
+                        Assignment</button>
+                    <button class="side-btn"
+                        onclick="document.getElementById('notes').style.display='block'">Notes</button>
+                    {{/if}}
+                    <button class="side-btn"
+                        onclick="document.getElementById('meeting').style.display='block'">Meetings</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {{!-- Submit assignment --}}
+    <div id="submitAssignment" class="modal">
+
+        <div class="modal-content animate">
+            <h2>Submit Assignment</h2>
+            {{#if assignment}}
+            {{#each assignment}}
+            <div class="pop-container">
+                <form enctype="multipart/form-data"
+                    action="/assignment-upload?teamname={{teamname}}&assignName={{this.assignment-name}}" method="post">
+                    <div class="assign-box">
+                        <h3 for="assigenment-name"><b>Assignment Title</b></h3>
+                        <p>{{this.assignment-name}}</p>
+                        <h3 for="assigenment-name"><b>Assignment Description</b></h3>
+                        <p>{{this.assignment-desc}}</p>
+                        <h3 for="assigenment-name">Due Date</h3>
+                        <p>{{this.duedate}}</p>
+                        <input type="file" id="file-upload" name="assignfile" required>
+                        <button type="submit">Upload</button>
+                    </div>
+                </form>
+            </div>
+            {{/each}}
+            {{else}}
+            <h2>No Assignments</h2>
+            {{/if}}
+            <div class="pop-container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('submitAssignment').style.display='none'"
+                    class="cancelbtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    {{!-- Meetings --}}
+    <div id="meeting" class="modal">
+
+        <form class="modal-content animate">
+            <h2>Meetings</h2>
+            {{#if meetings}}
+            {{#each meetings}}
+            <div class="pop-container">
+                <div class="assign-box">
+                    <h3 for="assigenment-name"><b>Meeting Title</b></h3>
+                    <p>{{this.title}}</p>
+                    <h3 for="assigenment-name">Date and time</h3>
+                    <p>{{this.date}}</p>
+                    <a href="/room={{this.uqid}}">Join</a>
+                </div>
+            </div>
+            {{/each}}
+            {{else}}
+            <h2>No Meeting</h2>
+            {{/if}}
+            <div class="pop-container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('meeting').style.display='none'"
+                    class="cancelbtn">Cancel</button>
+            </div>
+        </form>
+    </div>
+    {{!-- Uploaded Notes --}}
+    <div id="notes" class="modal">
+
+        <form class="modal-content animate">
+            <h2>Notes</h2>
+            {{#if notes}}
+            {{#each notes}}
+            <div class="pop-container">
+                <div class="assign-box">
+                    <a href="pdf-viewer?filename={{this.filename}}" target="_blank">File : {{this.filename}}</a>
+                </div>
+            </div>
+            {{/each}}
+            {{else}}
+            <h2>No Notes</h2>
+            {{/if}}
+            <div class="pop-container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('notes').style.display='none'"
+                    class="cancelbtn">Cancel</button>
+            </div>
+        </form>
+    </div>
+    {{#if teacher}}
+    {{!-- assignment --}}
+    <div id="createAssignment" class="modal">
+
+        <form class="modal-content animate" id="create-assignment">
+            <h2>Create Assignment</h2>
+            <div class="pop-container">
+                <label for="assigenment-name"><b>Assignment Name</b></label>
+                <input type="text" placeholder="Enter Assignment Name" name="assigenment-name" required>
+
+                <label for="assignment-description"><b>Description</b></label>
+                <input type="text" placeholder="Enter Assignment Description" name="assignment-description" required>
+                <label for="due-date"><b>Due Date</b></label>
+                <input type="datetime-local" id="birthdaytime" name="due-date" required>
+
+                <button type="submit">Create</button>
+            </div>
+            <p id="assignment-created" style="text-align: center; color: green"></p>
+            <div class="pop-container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('createAssignment').style.display='none'"
+                    class="cancelbtn">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    {{!-- adding memebers --}}
+    <div id="addMembers" class="modal">
+
+        <form class="modal-content animate" id="add-members">
+            <h2>Add Members</h2>
+            <div class="pop-container">
+                <label for="mem-email"><b>Email of the member</b></label>
+                <input type="text" placeholder="Enter Email" name="mem-email" required>
+                <button type="submit">Add Member</button>
+            </div>
+            <p id="memadded" style="text-align: center; color: green"></p>
+            <div class="pop-container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('addMembers').style.display='none'"
+                    class="cancelbtn">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    {{!-- set meetings --}}
+    <div id="setmeeting" class="modal">
+        <form class="modal-content animate" id="set-meeting">
+            <h2>Set Meeting</h2>
+            <div class="pop-container">
+                <label for="meeting-title"><b>Meeting Title</b></label>
+                <input type="text" placeholder="Enter Meeting title" name="meeting-title" required>
+                <label for="meet-date"><b>Meeting Date and Time</b></label>
+                <input type="datetime-local" id="birthdaytime" name="meet-date" required>
+                <button type="submit">Set Meeting</button>
+            </div>
+            <p id="meeting-set" style="text-align: center; color: green"></p>
+            <div class="pop-container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('setmeeting').style.display='none'"
+                    class="cancelbtn">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    {{!-- Upload notes --}}
+    <div id="upload-notes" class="modal">
+        <form class="modal-content animate" enctype="multipart/form-data" action="/notes-upload?teamname={{teamname}}"
+            method="post">
+            <h2>Upload Notes</h2>
+            <div class="pop-container">
+                <label for="file-upload"><b>Select file</b></label>
+                <input type="file" id="file-upload" name="file" required>
+                <button type="submit">Upload</button>
+            </div>
+            <div class="pop-container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('upload-notes').style.display='none'"
+                    class="cancelbtn">Cancel</button>
+            </div>
+        </form>
+    </div>
+    {{/if}}
+</body>
+<script>
+    var modal = document.getElementsByClassName("modal");
+    window.onclick = function (event) {
+        for (const it of modal) {
+            if (event.target == it) {
+                it.style.display = "none";
+            }
+        }
+    }
+    teamname = document.getElementsByClassName("team-name")[0].textContent;
+    document.getElementById("create-assignment").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const assignmentname = document.getElementsByName("assigenment-name")[0].value;
+        const assignmentdescription = document.getElementsByName("assignment-description")[0].value;
+        const duedate = document.getElementsByName("due-date")[0].value;
+        const assignmentcreated = document.getElementById("assignment-created");
+        console.log(assignmentname);
+        $.post("/create-assignment", {
+            assignmentname,
+            assignmentdescription,
+            duedate,
+            teamname
+        },
+            function (data, status) {
+                assignmentname.value = "";
+                assignmentdescription.value = "";
+                assignmentcreated.innerText = "Assignment Created"
+                return false;
+            });
+    })
+
+    document.getElementById("add-members").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const mememail = document.getElementsByName("mem-email")[0].value;
+        const memadded = document.getElementById("memadded");
+        $.post("/add-student", {
+            teamName: teamname,
+            memb: mememail
+        },
+            function (data, status) {
+                memadded.innerText = "Member Added"
+                return false;
+            });
+    })
+
+    document.getElementById("set-meeting").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const meetingtitle = document.getElementsByName("meeting-title")[0].value;
+        const meetingdate = document.getElementsByName("meet-date")[0].value;
+        const meetingset = document.getElementById("meeting-set");
+        $.post("/set-meeting", {
+            teamname,
+            meetingdate,
+            meetingtitle
+        },
+            function (data, status) {
+                meetingset.innerText = "Meeting Set"
+                return false;
+            });
+    })
+</script>
+
+</html>
