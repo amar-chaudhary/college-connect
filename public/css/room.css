@@ -278,10 +278,6 @@
   #messages__container {
     display: none;
   }
-
-  #chat__button {
-    display: block;
-  }
 }
 
 #stream__box {
