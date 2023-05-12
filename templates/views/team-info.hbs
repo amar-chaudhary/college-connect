@@ -157,15 +157,13 @@
             {{/if}}
             <div class="pop-container" style="background-color:#f1f1f1">
                 <button type="button" onclick="document.getElementById('submitAssignment').style.display='none'"
-                    class="cancelbtn">Cancel</button>
+                    class="cancelbtn">Close</button>
             </div>
         </div>
     </div>
 
     {{!-- Meetings --}}
-    <div id="meeting" class="modal">
-
-        <form class="modal-content animate">
+    <div id="meeting" class="modal" style="color:white;">
             <h2>Meetings</h2>
             {{#if meetings}}
             {{#each meetings}}
@@ -175,16 +173,22 @@
                     <p>{{this.title}}</p>
                     <h3 for="assigenment-name">Date and time</h3>
                     <p>{{this.date}}</p>
-                    <a href="/room={{this.uqid}}">Join</a>
+                    <form action="/room={{this.uqid}}">
+                        <button style="background-color:#030E81;color:white;">Join</button>
+                    </form>
+                    <form action="/delete-meeting?meetingid={{this.uqid}}&teamname={{teamname}}" enctype="multipart/form-data" method="post">
+                        <button style="color:white;background-color:red;" type="submit">Delete</button>
+                    </form>
                 </div>
             </div>
             {{/each}}
             {{else}}
             <h2>No Meeting</h2>
             {{/if}}
-            <div class="pop-container" style="background-color:#f1f1f1">
+            <form class="moda   l-content animate">
+            <div class="pop-container" style="padding-bottom: 70px">
                 <button type="button" onclick="document.getElementById('meeting').style.display='none'"
-                    class="cancelbtn">Cancel</button>
+                    class="cancelbtn">Close</button>
             </div>
         </form>
     </div>
@@ -206,7 +210,7 @@
             {{/if}}
             <div class="pop-container" style="background-color:#f1f1f1">
                 <button type="button" onclick="document.getElementById('notes').style.display='none'"
-                    class="cancelbtn">Cancel</button>
+                    class="cancelbtn">Close</button>
             </div>
         </form>
     </div>
@@ -230,7 +234,7 @@
             <p id="assignment-created" style="text-align: center; color: green"></p>
             <div class="pop-container" style="background-color:#f1f1f1">
                 <button type="button" onclick="document.getElementById('createAssignment').style.display='none'"
-                    class="cancelbtn">Cancel</button>
+                    class="cancelbtn">Close</button>
             </div>
         </form>
     </div>
@@ -248,7 +252,7 @@
             <p id="memadded" style="text-align: center; color: green"></p>
             <div class="pop-container" style="background-color:#f1f1f1">
                 <button type="button" onclick="document.getElementById('addMembers').style.display='none'"
-                    class="cancelbtn">Cancel</button>
+                    class="cancelbtn">Close</button>
             </div>
         </form>
     </div>
@@ -267,7 +271,7 @@
             <p id="meeting-set" style="text-align: center; color: green"></p>
             <div class="pop-container" style="background-color:#f1f1f1">
                 <button type="button" onclick="document.getElementById('setmeeting').style.display='none'"
-                    class="cancelbtn">Cancel</button>
+                    class="cancelbtn">Close</button>
             </div>
         </form>
     </div>
@@ -284,7 +288,7 @@
             </div>
             <div class="pop-container" style="background-color:#f1f1f1">
                 <button type="button" onclick="document.getElementById('upload-notes').style.display='none'"
-                    class="cancelbtn">Cancel</button>
+                    class="cancelbtn">Close</button>
             </div>
         </form>
     </div>

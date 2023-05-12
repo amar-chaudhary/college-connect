@@ -50,15 +50,13 @@
                 <h2 class="fields">{{this.teamname}}</h2>
                 <h2 class="fields">{{this.title}}</h2>
                 <h4 class="fields">{{this.date}}</h4>
-                <button><a class="join" href="/video-calling{{this.uuid}}">Join</a></button>
+                <button><a class="join" href="/room={{this.uqid}}">Join</a></button>
             </div>
             {{/each}}
             {{else}}
-            <h2>No Assignment</h2>
+            <h2>No Meetings</h2>
             {{/if}}
         </div>
     </div>
-
 </body>
-
 </html>

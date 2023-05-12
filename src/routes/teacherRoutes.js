@@ -144,6 +144,22 @@ router.post("/set-meeting", [checkAuthenticated, checkIsTeacher], (req, res) => 
         console.log(e);
     }
 })
+router.post("/delete-meeting", [checkAuthenticated, checkIsTeacher], (req, res) => {
+    console.log(req.body);
+    const sql = "DELETE FROM meeting WHERE `meeting`.`uqid` = '"+req.query.meetingid+"'";
+    try {
+        connection.query(sql, (err, rows) => {
+            if (!err) {
+                res.redirect("team-info?team_name=" + req.query.teamname);
+            } else {
+                console.log(err)
+            }
+        })
+    } catch (e) {
+        res.redirect("teams");
+        console.log(e);
+    }
+})
 
 router.post("/notes-upload", [checkAuthenticated, checkIsTeacher], (req, res) => {
     console.log("inisd enotes-upload")
