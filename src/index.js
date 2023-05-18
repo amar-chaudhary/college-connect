@@ -44,6 +44,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const initializePassport = require("./utils/passportConfig");
+const { getElementError } = require("@testing-library/react");
 initializePassport(passport, email => {
     return new Promise((resolve, reject) => {
         const sql = "SELECT * FROM `userdetail` WHERE `email` = '" + email + "'";
@@ -64,16 +65,25 @@ app.get("/login",checkNotAuthenticated, (req, res)=>{
     res.render("login");
 })
 
-app.get("/test",(req, res) => {
-    res.send({
-        hello: "how are you"
-    })
+app.get("/signup",checkNotAuthenticated, (req, res)=>{
+    res.render("signup");
 })
+
+app.get("/signup-retry",checkNotAuthenticated, (req, res)=>{
+    res.render("signup-retry");
+})
+
 app.post("/login",checkNotAuthenticated, passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",
     failureFlash: true,
 }))
+
+app.get("/test",(req, res) => {
+    res.send({
+        hello: "how are you"
+    })
+})
 
 app.get('/logout', checkAuthenticated, function(req, res) {
     req.logout(function(err) {
@@ -125,3 +135,33 @@ const port = 3000;
 server.listen(port, () => {
     console.log(`Server running at http://${hostname}:${port}/`)
 });
+
+app.post("/signup", [checkNotAuthenticated], (req, res) => {
+    email = req.body.email;
+    fullname = req.body.name;
+    pass = req.body.password;
+    choice = req.body.choice;
+    var emailExists
+        const sql = "select count(*) as count from `userdetail`where email='"+email+"'";
+        connection.query(sql, [email], (error, results) => {
+            const count = results[0].count;
+            const emailExists = count === 1;
+        });
+    if(emailExists<1){
+        try {
+            const sql = "INSERT INTO `userdetail` (`id`, `name`, `email`, `password`, `status`) VALUES (NULL, '"+fullname+"', '"+email+"', '"+pass+"', '"+choice+"');";
+            connection.query(sql, (err, rows) => {
+                if (err) {
+                    console.log(err);
+                }
+                return res.send("User added created")
+            })
+        } catch (e) {
+            return console.log(e);
+        }
+    }
+    else{
+        res.redirect(`/signup-retry`)
+    }
+}
+);

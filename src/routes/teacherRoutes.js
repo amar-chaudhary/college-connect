@@ -1,9 +1,7 @@
 const express = require("express");
-const upload = require("express-fileupload");
 const router = new express.Router();
 const path = require("path");
 const {v4: uuidv4} = require("uuid");
-router.use(upload());
 const {
     checkAuthenticated,
     checkNotAuthenticated,

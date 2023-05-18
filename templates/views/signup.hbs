@@ -1,27 +1,3 @@
-{{!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Home</title>
-</head>
-
-<body>
-    <form action="/login" method="post">
-        <input type="email" name="email" required>
-        <input type="password" name="password" required>
-        <button type="submit">Login</button>
-    </form>
-    {{#if messages.error}}
-    <div style="text-align:center ;color:red;">{{messages.error}} </div>
-    {{/if}}
-</body>
-
-</html> --}}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Signup</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
@@ -50,7 +26,7 @@
         border: 2px solid;
         width: 400px;
         margin: 100px auto;
-        height: 400px;
+        height: 550px;
         background: white;
         border-top-left-radius: 40px;
         border-bottom-right-radius: 40px;
@@ -107,13 +83,16 @@
 <body>
     <div class="box">
         <img src="images/logo.png" style="height:50px;padding-left:35%;padding-top:5%"/>
-        <form action="/login" method="post">
+        <form action="/signup" method="post"  enctype="multipart/form-data">
             <labe class="labels">Email</labe>
             <input type="email" name="email" placeholder="Email" required>
+            <labe class="labels">Name</labe>
+            <input type="text" name="name" placeholder="name" required>
             <labe class="labels">Password</labe>
             <input type="password" name="password" placeholder="Password" required>
-            <button>Login</button>
-            <p style="padding-top: 20px;">Don't have an account?<a href="/signup">Signup</a></p>
+            <input type="radio" id="Teacher" name="choice" value="Teacher"><label for="Teacher">Teacher</label>
+            <input type="radio" id="Student" name="choice" value="Student" checked><label for="Student">Student</label>
+            <button>Signup</button>
             {{#if messages.error}}
     <div style="text-align:center ;color:red;">{{messages.error}} </div>
     {{/if}}

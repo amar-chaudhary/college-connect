@@ -104,12 +104,13 @@
                 </div>
                 <div class="right">
                     {{#if teacher}}
-                    <button class="side-btn"
+                    <button class="side-btn"    
                         onclick="document.getElementById('createAssignment').style.display='block'">Create
                         Assignment</button>
                     <button class="side-btn" onclick="document.getElementById('addMembers').style.display='block'">Add
                         Members</button>
-                    <button class="side-btn">View Assignments</button>
+                    <button class="side-btn" onclick="document.getElementById('viewAssignments').style.display='block'">View
+                         Assignments</button>
                     <button class="side-btn" onclick="document.getElementById('setmeeting').style.display='block'">Set
                         Meeting</button>
                     <button class="side-btn"
@@ -137,8 +138,7 @@
             {{#if assignment}}
             {{#each assignment}}
             <div class="pop-container">
-                <form enctype="multipart/form-data"
-                    action="/assignment-upload?teamname={{teamname}}&assignName={{this.assignment-name}}" method="post">
+                <form enctype="multipart/form-data" action="/assignment-upload?teamname={{teamname}}&assignName={{this.assignment-name}}" method="post">
                     <div class="assign-box">
                         <h3 for="assigenment-name"><b>Assignment Title</b></h3>
                         <p>{{this.assignment-name}}</p>
@@ -146,7 +146,7 @@
                         <p>{{this.assignment-desc}}</p>
                         <h3 for="assigenment-name">Due Date</h3>
                         <p>{{this.duedate}}</p>
-                        <input type="file" id="file-upload" name="assignfile" required>
+                        <input type="file" id="upload-assign" name="assignfile" required>
                         <button type="submit">Upload</button>
                     </div>
                 </form>
@@ -288,6 +288,30 @@
             </div>
             <div class="pop-container" style="background-color:#f1f1f1">
                 <button type="button" onclick="document.getElementById('upload-notes').style.display='none'"
+                    class="cancelbtn">Close</button>
+            </div>
+        </form>
+    </div>
+
+        {{!-- Uploaded Assignments --}}
+    <div id="viewAssignments" class="modal">
+
+        <form class="modal-content animate">
+            <h2>Assignments</h2>
+            {{#if assignment_upload}}
+            {{#each assignment_upload}}
+            <div class="pop-container">
+                <div class="assign-box">
+                    <div><h3>{{this.email}}:</h3><p>{{this.assign-name}}</p></div>
+                    <a href="pdf-viewer?filename={{this.filename}}" target="_blank">File : {{this.filename}}</a>
+                </div>
+            </div>
+            {{/each}}
+            {{else}}
+            <h2>No Assignments</h2>
+            {{/if}}
+            <div class="pop-container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('viewAssignments').style.display='none'"
                     class="cancelbtn">Close</button>
             </div>
         </form>

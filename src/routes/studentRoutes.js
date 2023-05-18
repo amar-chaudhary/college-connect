@@ -1,6 +1,8 @@
 const express = require("express");
 const router = new express.Router();
+const upload = require("express-fileupload");
 const storage = require('node-sessionstorage')
+router.use(upload());
 
 const {
     checkAuthenticated,
@@ -72,6 +74,8 @@ router.get("/team-info", [checkAuthenticated], async (req, res) => {
     let meetings = await executeSQL(sql);
     sql = "SELECT * FROM `notes` WHERE `teamname` LIKE '" + teamname + "'"
     let notes = await executeSQL(sql);
+    sql = "SELECT * FROM `assignment-upload` WHERE `teamname` LIKE '" + teamname + "'"
+    let assignment_upload = await executeSQL(sql);
     let students = await getStudents(teamname);
     let teachers = await getTeachers(teamname);
     console.log(assignment);
@@ -82,6 +86,7 @@ router.get("/team-info", [checkAuthenticated], async (req, res) => {
         teachers,
         students,
         teamname,
+        assignment_upload,
         assignment,
         meetings,
         notes
@@ -135,10 +140,10 @@ router.post("/assignment-upload", [checkAuthenticated, checkIsNotTeacher], (req,
     console.log("inisd assign-upload")
     console.log(req.query.teamname);
     const uploadpath = path.join(__dirname, "../../public/uploads");
-    // console.log(uploadpath);
-    if (req.files) {
+    console.log(req.files);
+    if (req.files.assignfile!=null) {
+        var file = req.files.assignfile;
         console.log("file exist")
-        var file = req.files.assignfile
         const filename = file.name;
         try {
             const sql = "INSERT INTO `assignment-upload` (`id`, `teamname`, `assign-name`, `email`, `filename`) VALUES (NULL, '" + req.query.teamname + "', '" + req.query.assignName + "', '" + req.user.email + "', '" + filename + "');";
@@ -153,9 +158,10 @@ router.post("/assignment-upload", [checkAuthenticated, checkIsNotTeacher], (req,
             res.redirect("team-info?team_name=" + req.query.teamname);
         }
     }
-    else{
-        res.redirect("team-info?team_name=" + req.query.teamname);
-    }
+    // else{
+    //     console.log("Failed");
+    //     res.redirect("team-info?team_name=" + req.query.teamname);
+    // }
 })
 const getStudents = (teamname) => {
     return new Promise((resolve, reject) => {
