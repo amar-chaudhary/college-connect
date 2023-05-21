@@ -22,6 +22,7 @@ const APP_ID = "fa194ed985bc4a87ba680bec80fd70a4"
 // sessionStorage.setItem('display_name', uidvalue)
 
 let ROOM_ID = document.getElementById("r-id").innerText;
+
 sessionStorage.setItem('uid', ROOM_ID)
 sessionStorage.setItem('display_name', ROOM_ID)
 

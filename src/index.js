@@ -111,9 +111,8 @@ app.get("/join", (req,res) => {
 
 app.get('/:room' , (req, res) =>{
     // console.log(req.params);
-    
     res.render('room', { roomID : req.params.room,
-    user : req.user.email
+    user : req.user.email,
     })
 
 })
@@ -136,18 +135,18 @@ server.listen(port, () => {
     console.log(`Server running at http://${hostname}:${port}/`)
 });
 
-app.post("/signup", [checkNotAuthenticated], (req, res) => {
+app.post("/signup", [checkNotAuthenticated], async (req, res) => {
     email = req.body.email;
     fullname = req.body.name;
     pass = req.body.password;
     choice = req.body.choice;
-    var emailExists
+    var count
         const sql = "select count(*) as count from `userdetail`where email='"+email+"'";
-        connection.query(sql, [email], (error, results) => {
-            const count = results[0].count;
-            const emailExists = count === 1;
-        });
-    if(emailExists<1){
+        let results = await executeSQL(sql);
+        count = results[0].count;
+        console.log(count)
+    console.log(count<1)
+    if(count<1){
         try {
             const sql = "INSERT INTO `userdetail` (`id`, `name`, `email`, `password`, `status`) VALUES (NULL, '"+fullname+"', '"+email+"', '"+pass+"', '"+choice+"');";
             connection.query(sql, (err, rows) => {
@@ -165,3 +164,22 @@ app.post("/signup", [checkNotAuthenticated], (req, res) => {
     }
 }
 );
+
+const executeSQL = (sql) => {
+    return new Promise((resolve, reject) => {
+        try {
+            connection.query(sql, (err, rows) => {
+                // console.log("rows inside st", rows)
+                if (err) {
+                    console.log("error", err);
+                } else {
+                    resolve(rows);
+                }
+            })
+        } catch (e) {
+            console.log(e);
+            reject();
+        }
+
+    })
+}

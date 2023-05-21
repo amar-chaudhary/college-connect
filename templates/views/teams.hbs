@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <title>Teams</title>
+    <title>Classes</title>
 </head>
 <style>
     .card {
@@ -67,10 +67,10 @@
         {{>navbar}}
         {{/if}}
         <div id="content">
-            <h1 id="head">Your Teams</h1>
+            <h1 id="head">Your Classes</h1>
             {{#if teacher}}
             <div>
-                <a href="/create-teams"><button class="side-btn">Create Team</button></a>
+                <a href="/create-teams"><button class="side-btn">Create Class</button></a>
             </div>
             {{/if}}
             <div class="teams">
@@ -87,7 +87,7 @@
                 </div>
                 {{/each}}
                 {{else}}
-                <h1>You are added in no Team</h1>
+                <h1>You are added in no Class</h1>
                 {{/if}}
             </div>
 

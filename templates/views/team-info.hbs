@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/pop-up.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <title>Teams</title>
+    <title>Classes</title>
 </head>
 <style>
     .inner-container {
@@ -93,13 +93,13 @@
                 <div class="left">
                     <h1>Teachers</h1>
                     {{#each teachers}}
-                    <p class="students">{{this.email}}</p>
+                    <p class="students">{{this.name}}</p>
                     {{/each}}
                 </div>
                 <div class="mid">
                     <h1>Students</h1>
                     {{#each students}}
-                    <p class="students">{{this.member}}</p>
+                    <p class="students">{{this.name}}</p>
                     {{/each}}
                 </div>
                 <div class="right">
@@ -115,15 +115,18 @@
                         Meeting</button>
                     <button class="side-btn"
                         onclick="document.getElementById('upload-notes').style.display='block'">Upload Notes</button>
+                     <button class="side-btn"
+                        onclick="document.getElementById('meeting-t').style.display='block'">Meetings</button>
                     {{else}}
                     <button class="side-btn"
                         onclick="document.getElementById('submitAssignment').style.display='block'">Submit
                         Assignment</button>
                     <button class="side-btn"
                         onclick="document.getElementById('notes').style.display='block'">Notes</button>
-                    {{/if}}
                     <button class="side-btn"
                         onclick="document.getElementById('meeting').style.display='block'">Meetings</button>
+                    {{/if}}
+
                 </div>
             </div>
 
@@ -162,8 +165,8 @@
         </div>
     </div>
 
-    {{!-- Meetings --}}
-    <div id="meeting" class="modal" style="color:white;">
+       {{!-- Meetings teacher--}}
+    <div id="meeting-t" class="modal" style="color:white;">
             <h2>Meetings</h2>
             {{#if meetings}}
             {{#each meetings}}
@@ -178,6 +181,34 @@
                     </form>
                     <form action="/delete-meeting?meetingid={{this.uqid}}&teamname={{teamname}}" enctype="multipart/form-data" method="post">
                         <button style="color:white;background-color:red;" type="submit">Delete</button>
+                    </form>
+                </div>
+            </div>
+            {{/each}}
+            {{else}}
+            <h2>No Meeting</h2>
+            {{/if}}
+            <form class="moda   l-content animate">
+            <div class="pop-container" style="padding-bottom: 70px">
+                <button type="button" onclick="document.getElementById('meeting').style.display='none'"
+                    class="cancelbtn">Close</button>
+            </div>
+        </form>
+    </div>
+
+    {{!-- Meetings --}}
+    <div id="meeting" class="modal" style="color:white;">
+            <h2>Meetings</h2>
+            {{#if meetings}}
+            {{#each meetings}}
+            <div class="pop-container">
+                <div class="assign-box">
+                    <h3 for="assigenment-name"><b>Meeting Title</b></h3>
+                    <p>{{this.title}}</p>
+                    <h3 for="assigenment-name">Date and time</h3>
+                    <p>{{this.date}}</p>
+                    <form action="/room={{this.uqid}}">
+                        <button style="background-color:#030E81;color:white;">Join</button>
                     </form>
                 </div>
             </div>
@@ -215,7 +246,7 @@
         </form>
     </div>
     {{#if teacher}}
-    {{!-- assignment --}}
+    {{!--create assignment --}}
     <div id="createAssignment" class="modal">
 
         <form class="modal-content animate" id="create-assignment">
