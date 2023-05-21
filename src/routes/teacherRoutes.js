@@ -34,10 +34,14 @@ router.post("/create-team", [checkAuthenticated, checkIsTeacher], (req, res) => 
         return console.log(e);
     }
 })
-router.post("/add-student", [checkAuthenticated, checkIsTeacher], (req, res) => {
+router.post("/add-student", [checkAuthenticated, checkIsTeacher], async (req, res) => {
     // console.log("student:", req.body);
     const teamName = req.body.teamName;
     const memb = req.body.memb;
+    const sql = "select status from `userdetail` where email='"+memb+"'";
+    let results = await executeSQL(sql);
+    console.log(results[0].status)
+    if (results[0].status === "student"){
     try {
         const sql = "INSERT INTO `study_on` (`id`, `team_name`, `member`) VALUES (NULL, '" + teamName + "', '" + memb + "');";
         connection.query(sql, (err, rows) => {
@@ -49,6 +53,20 @@ router.post("/add-student", [checkAuthenticated, checkIsTeacher], (req, res) => 
     } catch (e) {
         return console.log(e);
     }
+}
+else if (results[0].status === "teacher"){
+    try {
+        const sql = "INSERT INTO `teaches_on` (`id`, `team_name`, `email`) VALUES (NULL, '" + teamName + "', '" + memb + "');";
+        connection.query(sql, (err, rows) => {
+            if (err) {
+                console.log(err);
+            }
+            return res.send("Team memebrs are added")
+        })
+    } catch (e) {
+        return console.log(e);
+    }
+}
 })
 router.post("/add-teacher", [checkAuthenticated, checkIsTeacher], (req, res) => {
     // console.log("teacher", req.body);
@@ -66,6 +84,26 @@ router.post("/add-teacher", [checkAuthenticated, checkIsTeacher], (req, res) => 
         return console.log(e);
     }
 })
+
+const executeSQL = (sql) => {
+    return new Promise((resolve, reject) => {
+        try {
+            connection.query(sql, (err, rows) => {
+                // console.log("rows inside st", rows)
+                if (err) {
+                    console.log("error", err);
+                } else {
+                    resolve(rows);
+                }
+            })
+        } catch (e) {
+            console.log(e);
+            reject();
+        }
+
+    })
+}
+
 router.get("/notices", [checkAuthenticated], (req, res) => {
     const sql = "SELECT * FROM `notices`";
     let teacher = false;
@@ -180,5 +218,42 @@ router.post("/notes-upload", [checkAuthenticated, checkIsTeacher], (req, res) =>
         res.redirect("team-info?team_name=" + req.query.teamname);
     }
 
+})
+
+router.post("/delete-member", [checkAuthenticated, checkIsTeacher], async (req, res) => {
+    // console.log("student:", req.body);
+    const teamName = req.body.teamName;
+    const memb = req.body.member;
+    console.log(memb)
+    const sql = "select status from `userdetail` where email='"+memb+"'";
+    let results = await executeSQL(sql);
+    console.log(results)
+    console.log(results[0].status)
+    if (results[0].status === "student"){
+    try {
+        const sql = "Delete from `study_on` where `member` ='" + memb + "';";
+        connection.query(sql, (err, rows) => {
+            if (err) {
+                console.log(err);
+            }
+            return res.send("Team memebrs are deleted")
+        })
+    } catch (e) {
+        return console.log(e);
+    }
+}
+else if (results[0].status === "teacher"){
+    try {
+        const sql = "Delete from `teaches_on` where `email` = '" + memb + "';";
+        connection.query(sql, (err, rows) => {
+            if (err) {
+                console.log(err);
+            }
+            return res.send("Team memebrs are deleted")
+        })
+    } catch (e) {
+        return console.log(e);
+    }
+}
 })
 module.exports = router;

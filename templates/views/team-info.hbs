@@ -109,6 +109,8 @@
                         Assignment</button>
                     <button class="side-btn" onclick="document.getElementById('addMembers').style.display='block'">Add
                         Members</button>
+                    <button class="side-btn" onclick="document.getElementById('delete-members').style.display='block'">Delete
+                        Members</button>
                     <button class="side-btn" onclick="document.getElementById('viewAssignments').style.display='block'">View
                          Assignments</button>
                     <button class="side-btn" onclick="document.getElementById('setmeeting').style.display='block'">Set
@@ -288,6 +290,24 @@
         </form>
     </div>
 
+    {{!-- delete memebers --}}
+    <div id="delete-members" class="modal">
+
+        <form class="modal-content animate" id="deletemembers">
+            <h2>Add Members</h2>
+            <div class="pop-container">
+                <label for="memberemail"><b>Email of the member</b></label>
+                <input type="text" placeholder="Enter Email" name="memberemail" required>
+                <button type="submit" style="background-color: red;">Delete Member</button>
+            </div>
+            <p id="memdeleted" style="text-align: center; color: green"></p>
+            <div class="pop-container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('delete-members').style.display='none'"
+                    class="cancelbtn">Close</button>
+            </div>
+        </form>
+    </div>
+
     {{!-- set meetings --}}
     <div id="setmeeting" class="modal">
         <form class="modal-content animate" id="set-meeting">
@@ -390,6 +410,20 @@
         },
             function (data, status) {
                 memadded.innerText = "Member Added"
+                return false;
+            });
+    })
+
+    document.getElementById("deletemembers").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const mememail = document.getElementsByName("memberemail")[0].value;
+        const memdeleted = document.getElementById("memdeleted");
+        $.post("/delete-member", {
+            teamName: teamname,
+            member: mememail
+        },
+            function (data, status) {
+                memdeleted.innerText = "Member Deleted"
                 return false;
             });
     })

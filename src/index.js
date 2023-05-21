@@ -144,8 +144,6 @@ app.post("/signup", [checkNotAuthenticated], async (req, res) => {
         const sql = "select count(*) as count from `userdetail`where email='"+email+"'";
         let results = await executeSQL(sql);
         count = results[0].count;
-        console.log(count)
-    console.log(count<1)
     if(count<1){
         try {
             const sql = "INSERT INTO `userdetail` (`id`, `name`, `email`, `password`, `status`) VALUES (NULL, '"+fullname+"', '"+email+"', '"+pass+"', '"+choice+"');";
@@ -153,7 +151,7 @@ app.post("/signup", [checkNotAuthenticated], async (req, res) => {
                 if (err) {
                     console.log(err);
                 }
-                return res.send("User added created")
+                return res.redirect("login")
             })
         } catch (e) {
             return console.log(e);

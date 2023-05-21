@@ -23,13 +23,11 @@
 
     /* index page styling */
     .box {
-        border: 2px solid;
-        width: 400px;
+        width: 350px;
         margin: 100px auto;
         height: 550px;
         background: white;
-        border-top-left-radius: 40px;
-        border-bottom-right-radius: 40px;
+        border-radius: 20px;
     }
 
     .box h1 {
@@ -76,7 +74,7 @@
     }
 
     body {
-        background-image: url("images/login-repeat.jpg");
+        background-image: url("images/blue-bg.jpg");
     }
 </style>
 
@@ -90,8 +88,8 @@
             <input type="text" name="name" placeholder="name" required>
             <labe class="labels">Password</labe>
             <input type="password" name="password" placeholder="Password" required>
-            <input type="radio" id="Teacher" name="choice" value="Teacher"><label for="Teacher">Teacher</label>
-            <input type="radio" id="Student" name="choice" value="Student" checked><label for="Student">Student</label>
+            <input type="radio" id="Teacher" name="choice" value="teacher"><label for="Teacher">Teacher</label>
+            <input type="radio" id="Student" name="choice" value="student" checked><label for="Student">Student</label>
             <button>Signup</button>
             {{#if messages.error}}
     <div style="text-align:center ;color:red;">{{messages.error}} </div>

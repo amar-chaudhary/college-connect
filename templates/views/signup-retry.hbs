@@ -76,7 +76,7 @@
     }
 
     body {
-        background-image: url("images/login-repeat.jpg");
+        background-image: url("images/blue-bg.jpg");
     }
 </style>
 
@@ -90,8 +90,8 @@
             <input type="text" name="name" placeholder="name" required>
             <labe class="labels">Password</labe>
             <input type="password" name="password" placeholder="Password" required>
-            <input type="radio" id="Teacher" name="choice" value="Teacher"><label for="Teacher">Teacher</label>
-            <input type="radio" id="Student" name="choice" value="Student" checked><label for="Student">Student</label>
+            <input type="radio" id="Teacher" name="choice" value="teacher"><label for="Teacher">Teacher</label>
+            <input type="radio" id="Student" name="choice" value="student" checked><label for="Student">Student</label>
             <p style="color:red">Email alredy exists please retry</p>
             <button>Signup</button>
             {{#if messages.error}}
