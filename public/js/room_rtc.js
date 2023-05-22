@@ -1,30 +1,12 @@
 const APP_ID = "fa194ed985bc4a87ba680bec80fd70a4"
 
-// const myuid = document.cookie.split(';')
-//   .find(cookie => cookie.trim().startsWith('uid='));
-
-// if (myuid) {
-//   const uidvalue = myuid.split('=')[1];
-//   sessionStorage.setItem('uid', uidvalue);
-// }
-
-// const myuser = document.cookie.split(';')
-//   .find(cookie => cookie.trim().startsWith('user='));
-
-// if (myuser) {
-//   const uservalue = myuser.split('=')[1];
-//   sessionStorage.setItem('display_name', uservalue);
-// }
-
-// ele = document.getElementById('uuid')
-// uidvalue = 123434
-// sessionStorage.setItem('uid', uuid)
-// sessionStorage.setItem('display_name', uidvalue)
 
 let ROOM_ID = document.getElementById("r-id").innerText;
+let u_id = document.getElementById("n-id").innerText;
+
 
 sessionStorage.setItem('uid', ROOM_ID)
-sessionStorage.setItem('display_name', ROOM_ID)
+sessionStorage.setItem('display_name', u_id)
 
 
 let uid = sessionStorage.getItem('user')

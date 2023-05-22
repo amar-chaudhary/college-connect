@@ -4,6 +4,7 @@ const hbs = require("hbs");
 const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
+const storage = require('node-sessionstorage')
 const {
     checkAuthenticated,
     checkNotAuthenticated,
@@ -109,12 +110,40 @@ app.get("/join", (req,res) => {
     res.redirect(`/${uuidv4()}`)
 });
 
-app.get('/:room' , (req, res) =>{
-    // console.log(req.params);
+app.get('/:room' , async (req, res) =>{
+let stat = storage.getItem('status')
+let mail = storage.getItem('email')
+let u_name = storage.getItem('u_name')
+let id = req.params.room.replace("room=","");
+const sql = "select teamname from `meeting` where uqid='"+id+"'";
+let results =  await executeSQL(sql);
+let meeting_team = results[0].teamname;
+let user_team
+console.log(stat)
+if(stat === 'student'){
+    console.log(req.user)
+    const sql2 = "select * from `study_on`where member='"+mail+"' and team_name='"+meeting_team+"'";
+    results = await executeSQL(sql2);
+    if(results[0]){
+        user_team = results[0].team_name;
+    }
+}
+else{
+    const sql2 = "select * from `teaches_on`where email='"+mail+"' and team_name='"+meeting_team+"'";
+    results = await executeSQL(sql2);
+    if(results[0]){
+        user_team = results[0].team_name;
+    }
+}
+if(user_team){
     res.render('room', { roomID : req.params.room,
-    user : req.user.email,
+    user : mail,
+    name: u_name
     })
-
+}
+else{
+    res.redirect('/lobby.html')
+}
 })
 
 io.on('connection', socket =>{

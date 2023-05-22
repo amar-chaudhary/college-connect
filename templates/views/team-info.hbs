@@ -192,7 +192,7 @@
             {{/if}}
             <form class="moda   l-content animate">
             <div class="pop-container" style="padding-bottom: 70px">
-                <button type="button" onclick="document.getElementById('meeting').style.display='none'"
+                <button type="button" onclick="document.getElementById('meeting-t').style.display='none'"
                     class="cancelbtn">Close</button>
             </div>
         </form>
@@ -209,7 +209,7 @@
                     <p>{{this.title}}</p>
                     <h3 for="assigenment-name">Date and time</h3>
                     <p>{{this.date}}</p>
-                    <form action="/room={{this.uqid}}">
+                    <form action="/room={{this.uqid}}&{{this.teamname}}">
                         <button style="background-color:#030E81;color:white;">Join</button>
                     </form>
                 </div>
