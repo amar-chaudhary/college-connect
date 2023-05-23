@@ -88,7 +88,14 @@
         {{>navbar}}
         {{/if}}
         <div id="content">
+            <div>
             <h1 class="team-name">{{teamname}}</h1>
+            {{#if teacher}}
+                <button class="side-btn"
+                            onclick="document.getElementById('del-team').style.display='block'">Delete
+                            Class</button>
+            {{/if}}
+                </div>
             <div class="inner-container">
                 <div class="left">
                     <h1>Teachers</h1>
@@ -106,6 +113,9 @@
                     {{#if teacher}}
                     <button class="side-btn"    
                         onclick="document.getElementById('createAssignment').style.display='block'">Create
+                        Assignment</button>
+                    <button class="side-btn"
+                        onclick="document.getElementById('deleteAssignment').style.display='block'">Delete
                         Assignment</button>
                     <button class="side-btn" onclick="document.getElementById('addMembers').style.display='block'">Add
                         Members</button>
@@ -167,6 +177,37 @@
         </div>
     </div>
 
+    {{!-- Delete assignment --}}
+    <div id="deleteAssignment" class="modal">
+
+        <div class="modal-content animate">
+            <h2>Delete Assignment</h2>
+            {{#if assignment}}
+            {{#each assignment}}
+            <div class="pop-container">
+                <form enctype="multipart/form-data" action="/assignment-delete?teamname={{teamname}}&assignName={{this.assignment-name}}" method="post">
+                    <div class="assign-box">
+                        <h3 for="assigenment-name"><b>Assignment Title</b></h3>
+                        <p>{{this.assignment-name}}</p>
+                        <h3 for="assigenment-name"><b>Assignment Description</b></h3>
+                        <p>{{this.assignment-desc}}</p>
+                        <h3 for="assigenment-name">Due Date</h3>
+                        <p>{{this.duedate}}</p>
+                        <button type="submit" style="background-color:red">Delete</button>
+                    </div>
+                </form>
+            </div>
+            {{/each}}
+            {{else}}
+            <h2>No Assignments</h2>
+            {{/if}}
+            <div class="pop-container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('deleteAssignment').style.display='none'"
+                    class="cancelbtn">Close</button>
+            </div>
+        </div>
+    </div>
+
        {{!-- Meetings teacher--}}
     <div id="meeting-t" class="modal" style="color:white;">
             <h2>Meetings</h2>
@@ -209,7 +250,7 @@
                     <p>{{this.title}}</p>
                     <h3 for="assigenment-name">Date and time</h3>
                     <p>{{this.date}}</p>
-                    <form action="/room={{this.uqid}}&{{this.teamname}}">
+                    <form action="/room={{this.uqid}}">
                         <button style="background-color:#030E81;color:white;">Join</button>
                     </form>
                 </div>
@@ -290,7 +331,22 @@
         </form>
     </div>
 
-    {{!-- delete memebers --}}
+    {{!-- Delete Class --}}
+    <div id="del-team" class="modal">
+        <form class="modal-content animate" enctype="multipart/form-data" action="/delete-team?teamname={{teamname}}"
+            method="post">
+            <h2><b>Do you really want to delete the Class?</b></h2>
+            <div class="pop-container">
+                <button type="submit" style="background-color: red;" >Delete</button>
+            </div>
+            <div class="pop-container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('del-team').style.display='none'"
+                    class="cancelbtn">Close</button>
+            </div>
+        </form>
+    </div>
+
+    {{!-- delete members --}}
     <div id="delete-members" class="modal">
 
         <form class="modal-content animate" id="deletemembers">
@@ -404,7 +460,7 @@
         e.preventDefault();
         const mememail = document.getElementsByName("mem-email")[0].value;
         const memadded = document.getElementById("memadded");
-        $.post("/add-student", {
+        $.post("/add-member", {
             teamName: teamname,
             memb: mememail
         },

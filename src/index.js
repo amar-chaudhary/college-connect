@@ -143,7 +143,7 @@ if(user_team){
 }
 else{
     res.redirect('/lobby.html')
-}
+}   
 })
 
 io.on('connection', socket =>{

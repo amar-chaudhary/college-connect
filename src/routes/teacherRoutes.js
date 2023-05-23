@@ -34,14 +34,10 @@ router.post("/create-team", [checkAuthenticated, checkIsTeacher], (req, res) => 
         return console.log(e);
     }
 })
-router.post("/add-student", [checkAuthenticated, checkIsTeacher], async (req, res) => {
+router.post("/add-student", [checkAuthenticated, checkIsTeacher], (req, res) => {
     // console.log("student:", req.body);
     const teamName = req.body.teamName;
     const memb = req.body.memb;
-    const sql = "select status from `userdetail` where email='"+memb+"'";
-    let results = await executeSQL(sql);
-    console.log(results[0].status)
-    if (results[0].status === "student"){
     try {
         const sql = "INSERT INTO `study_on` (`id`, `team_name`, `member`) VALUES (NULL, '" + teamName + "', '" + memb + "');";
         connection.query(sql, (err, rows) => {
@@ -52,6 +48,32 @@ router.post("/add-student", [checkAuthenticated, checkIsTeacher], async (req, re
         })
     } catch (e) {
         return console.log(e);
+    }
+})
+
+router.post("/add-member", [checkAuthenticated, checkIsTeacher], async (req, res) => {
+    // console.log("student:", req.body);
+    const teamName = req.body.teamName;
+    const memb = req.body.memb;
+    const sql = "select status from `userdetail` where email='"+memb+"'";
+    let results = await executeSQL(sql);
+    try{
+        console.log(results[0].status)
+    }
+    catch{
+        res.redirect("user-invalid.html")
+    }
+    if (results[0].status === "student"){
+    try {
+        const sql = "INSERT INTO `study_on` (`id`, `team_name`, `member`) VALUES (NULL, '" + teamName + "', '" + memb + "');";
+        connection.query(sql, (err, rows) => {
+            if (err) {
+                console.log(err);
+            }
+            return res.send("Team memebrs are added")
+        })
+    } catch (e) {
+        console.log(e);
     }
 }
 else if (results[0].status === "teacher"){
@@ -67,6 +89,7 @@ else if (results[0].status === "teacher"){
         return console.log(e);
     }
 }
+
 })
 router.post("/add-teacher", [checkAuthenticated, checkIsTeacher], (req, res) => {
     // console.log("teacher", req.body);
@@ -196,6 +219,63 @@ router.post("/delete-meeting", [checkAuthenticated, checkIsTeacher], (req, res) 
         console.log(e);
     }
 })
+
+router.post("/delete-team", [checkAuthenticated, checkIsTeacher], (req, res) => {
+    console.log(req.body);
+    const sql = "DELETE FROM `teams` WHERE `teams`.`team_name`  = '"+req.query.teamname+"'";
+    try {
+        connection.query(sql, (err, rows) => {
+            if (!err) {
+                const sql2 = "DELETE FROM `teaches_on` WHERE `team_name`  = '"+req.query.teamname+"'";
+                try {
+                    connection.query(sql2, (err, rows) => {
+                        if (!err) {
+                        } else {
+                            console.log(err)
+                        }
+                    })
+                } catch (e) {
+                    res.redirect("teams");
+                    console.log(e);
+                }
+                const sql3 = "DELETE FROM `study_on` WHERE `team_name`  = '"+req.query.teamname+"'";
+                try {
+                    connection.query(sql3, (err, rows) => {
+                        if (!err) {
+                            res.redirect("teams");
+                        } else {
+                            console.log(err)
+                        }
+                    })
+                } catch (e) {
+                    res.redirect("teams");
+                    console.log(e);
+                }
+             } else {
+                console.log(err)
+            }
+        })
+    } catch (e) {
+        console.log(e);
+    }
+})
+
+router.post("/assignment-delete", [checkAuthenticated, checkIsTeacher], (req, res) => {
+    console.log(req.body);
+    const sql = "DELETE FROM assignment WHERE `assignment-name` = '"+req.query.assignName+"'";
+    try {
+        connection.query(sql, (err, rows) => {
+            if (!err) {
+                res.redirect("team-info?team_name=" + req.query.teamname);
+            } else {
+                console.log(err)
+            }
+        })
+    } catch (e) {
+        console.log(e);
+    }
+})
+
 
 router.post("/notes-upload", [checkAuthenticated, checkIsTeacher], (req, res) => {
     console.log("inisd enotes-upload")
