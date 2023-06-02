@@ -110,41 +110,80 @@ app.get("/join", (req,res) => {
     res.redirect(`/${uuidv4()}`)
 });
 
-app.get('/:room' , async (req, res) =>{
-let stat = storage.getItem('status')
-let mail = storage.getItem('email')
-let u_name = storage.getItem('u_name')
-let id = req.params.room.replace("room=","");
-const sql = "select teamname from `meeting` where uqid='"+id+"'";
-let results =  await executeSQL(sql);
-let meeting_team = results[0].teamname;
-let user_team
-console.log(stat)
-if(stat === 'student'){
-    console.log(req.user)
-    const sql2 = "select * from `study_on`where member='"+mail+"' and team_name='"+meeting_team+"'";
-    results = await executeSQL(sql2);
-    if(results[0]){
-        user_team = results[0].team_name;
+// app.get('/:room' , async (req, res) =>{
+// let stat = storage.getItem('status')
+// let mail = storage.getItem('email')
+// let u_name = storage.getItem('u_name')
+// let id = req.params.room.replace("room=","");
+// const sql = "select teamname from `meeting` where uqid='"+id+"'";
+// let results =  await executeSQL(sql);
+// let meeting_team = results[0].teamname;
+// let user_team
+// console.log(stat)
+// if(stat === 'student'){
+//     console.log(req.user)
+//     const sql2 = "select * from `study_on`where member='"+mail+"' and team_name='"+meeting_team+"'";
+//     results = await executeSQL(sql2);
+//     if(results[0]){
+//         user_team = results[0].team_name;
+//     }
+// }
+// else{
+//     const sql2 = "select * from `teaches_on`where email='"+mail+"' and team_name='"+meeting_team+"'";
+//     results = await executeSQL(sql2);
+//     if(results[0]){
+//         user_team = results[0].team_name;
+//     }
+// }
+// if(user_team){
+//     res.render('room', { roomID : req.params.room,
+//     user : mail,
+//     name: u_name
+//     })
+// }
+// else{
+//     res.redirect('/lobby.html')
+// }   
+// })
+
+app.post('/room' , async (req, res) =>{
+    let stat = storage.getItem('status')
+    mail = req.user.email
+    let id = req.query.id;
+    console.log(id)
+    const sql = "select teamname from `meeting` where uqid='"+id+"'";
+    let results =  await executeSQL(sql);
+    let meeting_team = results[0].teamname;
+    let user_team
+    console.log(stat)
+    if(stat === 'student'){
+        console.log(req.user)
+        const sql2 = "select * from `study_on`where member='"+mail+"' and team_name='"+meeting_team+"'";
+        results = await executeSQL(sql2);
+        if(results[0]){
+            user_team = results[0].team_name;
+        }
     }
-}
-else{
-    const sql2 = "select * from `teaches_on`where email='"+mail+"' and team_name='"+meeting_team+"'";
-    results = await executeSQL(sql2);
-    if(results[0]){
-        user_team = results[0].team_name;
+    else{
+        const sql2 = "select * from `teaches_on`where email='"+mail+"' and team_name='"+meeting_team+"'";
+        results = await executeSQL(sql2);
+        if(results[0]){
+            user_team = results[0].team_name;
+        }
     }
-}
-if(user_team){
-    res.render('room', { roomID : req.params.room,
-    user : mail,
-    name: u_name
+    const sql3 = "select name from `userdetail` where email='"+mail+"'";
+    let lt =  await executeSQL(sql3); 
+    let u_name = lt[0].name   
+    if(user_team){
+        res.render('room', { roomID : req.query.id,
+        user : mail,
+        name: u_name
+        })
+    }
+    else{
+        res.redirect('/lobby.html')
+    }   
     })
-}
-else{
-    res.redirect('/lobby.html')
-}   
-})
 
 io.on('connection', socket =>{
     socket.on('join-room', (roomID, userId)=>{

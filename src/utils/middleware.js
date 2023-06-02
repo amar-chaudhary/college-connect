@@ -16,8 +16,6 @@ function checkNotAuthenticated(req, res, next) {
 
 function checkIsTeacher(req, res, next) {
     storage.setItem('status', req.user.status)
-    storage.setItem('u_name', req.user.name)
-    storage.setItem('email', req.user.email)
     if (req.user.status === "teacher") {
         return next();
     } else {
@@ -27,8 +25,6 @@ function checkIsTeacher(req, res, next) {
 
 function checkIsNotTeacher(req, res, next) {
     storage.setItem('status', req.user.status)
-    storage.setItem('u_name', req.user.name)
-    storage.setItem('email', req.user.email)
     if (req.user.status !== "teacher") {
         return next();
     } else {

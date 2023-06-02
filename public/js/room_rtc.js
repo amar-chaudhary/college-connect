@@ -1,12 +1,12 @@
 const APP_ID = "fa194ed985bc4a87ba680bec80fd70a4"
 
+let roomId = document.getElementById("room-id").innerText;
+let u_id = document.getElementById("r-id").innerText;
+let n_id = document.getElementById("n-id").innerText;
 
-let ROOM_ID = document.getElementById("r-id").innerText;
-let u_id = document.getElementById("n-id").innerText;
 
-
-sessionStorage.setItem('uid', ROOM_ID)
-sessionStorage.setItem('display_name', u_id)
+sessionStorage.setItem('uid', u_id)
+sessionStorage.setItem('display_name', n_id)
 
 
 let uid = sessionStorage.getItem('user')
@@ -23,7 +23,8 @@ let channel;
 
 const queryString = window.location.search
 const urlParams = new URLSearchParams(queryString)
-let roomId = urlParams.get('room')
+// let roomId = urlParams.get('room')
+console.log("the room id is"+roomId)
 
 if(!roomId){
     roomId = 'main'

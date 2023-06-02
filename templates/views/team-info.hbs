@@ -219,8 +219,9 @@
                     <p>{{this.title}}</p>
                     <h3 for="assigenment-name">Date and time</h3>
                     <p>{{this.date}}</p>
-                    <form action="/room={{this.uqid}}">
-                        <button style="background-color:#030E81;color:white;">Join</button>
+                    <form class="modal-content animate" enctype="multipart/form-data" action="/room?id={{this.uqid}}"
+                        method="post">
+                         <button type='submit 'style="background-color:#030E81;color:white;">Join</button>
                     </form>
                     <form action="/delete-meeting?meetingid={{this.uqid}}&teamname={{teamname}}" enctype="multipart/form-data" method="post">
                         <button style="color:white;background-color:red;" type="submit">Delete</button>
@@ -250,8 +251,9 @@
                     <p>{{this.title}}</p>
                     <h3 for="assigenment-name">Date and time</h3>
                     <p>{{this.date}}</p>
-                    <form action="/room={{this.uqid}}">
-                        <button style="background-color:#030E81;color:white;">Join</button>
+                    <form class="modal-content animate" enctype="multipart/form-data" action="/room?id={{this.uqid}}"
+                        method="post">
+                         <button type='submit 'style="background-color:#030E81;color:white;">Join</button>
                     </form>
                 </div>
             </div>
