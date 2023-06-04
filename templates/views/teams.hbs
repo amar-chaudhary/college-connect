@@ -9,6 +9,12 @@
     <title>Classes</title>
 </head>
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans&display=swap');
+
+    h1 {
+        font-family: 'Instrument Sans', sans-serif;
+    }
+
     .card {
         /* Add shadows to create the "card" effect */
         box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
@@ -21,6 +27,8 @@
     /* On mouse-over, add a deeper shadow */
     .card:hover {
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        background-color: #8389dc55;
+        color: white;
     }
 
     /* Add some padding inside the card container */
@@ -87,10 +95,9 @@
                 </div>
                 {{/each}}
                 {{else}}
-                <h1>You are added in no Class</h1>
+                <h2 style="text-align: center; padding-top:250px;padding-left:420px">You are added in no classes</h2>
                 {{/if}}
             </div>
-
         </div>
     </div>
 

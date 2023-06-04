@@ -1,4 +1,5 @@
-{{!-- <!DOCTYPE html>
+{{!--
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -50,7 +51,7 @@
         width: 350px;
         flex-direction: column;
         align-items: center;
-        justify-content:center;
+        justify-content: center;
         margin: 100px auto;
         height: 400px;
         background: white;
@@ -107,7 +108,7 @@
 
 <body>
     <div class="box">
-        <img src="images/logo.png" style="height:50px;padding-left:35%;padding-top:5%"/>
+        <img src="images/logo.png" style="height:50px;padding-left:35%;padding-top:5%" />
         <form action="/login" method="post">
             <labe class="labels">Email</labe>
             <input type="email" name="email" placeholder="Email" required>
@@ -116,8 +117,8 @@
             <button>Login</button>
             <p style="padding-top: 20px;">Don't have an account?<a href="/signup">Signup</a></p>
             {{#if messages.error}}
-    <div style="text-align:center ;color:red;">{{messages.error}} </div>
-    {{/if}}
+            <div style="text-align:center ;color:red;">{{messages.error}} </div>
+            {{/if}}
         </form>
     </div>
 </body>

@@ -23,13 +23,11 @@
 
     /* index page styling */
     .box {
-        border: 2px solid;
-        width: 400px;
+        width: 350px;
         margin: 100px auto;
         height: 550px;
         background: white;
-        border-top-left-radius: 40px;
-        border-bottom-right-radius: 40px;
+        border-radius: 20px;
     }
 
     .box h1 {
@@ -82,8 +80,8 @@
 
 <body>
     <div class="box">
-        <img src="images/logo.png" style="height:50px;padding-left:35%;padding-top:5%"/>
-        <form action="/signup" method="post"  enctype="multipart/form-data">
+        <img src="images/logo.png" style="height:50px;padding-left:35%;padding-top:5%" />
+        <form action="/signup" method="post" enctype="multipart/form-data">
             <labe class="labels">Email</labe>
             <input type="email" name="email" placeholder="Email" required>
             <labe class="labels">Name</labe>
@@ -95,8 +93,8 @@
             <p style="color:red">Email alredy exists please retry</p>
             <button>Signup</button>
             {{#if messages.error}}
-    <div style="text-align:center ;color:red;">{{messages.error}} </div>
-    {{/if}}
+            <div style="text-align:center ;color:red;">{{messages.error}} </div>
+            {{/if}}
         </form>
     </div>
 </body>

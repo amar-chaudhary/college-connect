@@ -1,11 +1,22 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<style>
+    .links:hover {
+        color: #030E81;
+        background-color: white;
+    }
+
+    .links a:hover {
+        color: #030E81;
+        background-color: white;
+    }
+</style>
 <div class="nav">
-    <a href="/"><img src="images/logo-light.png" class="small-logo"/></a>
-    <ul class="list">
-        <li class="links"><a href="/teams">Classes</a></li>
-        <li class="links"><a href="/assignments">Assignments</a></li>
-        <li class="links"><a href="/time-table">Time Table</a></li>
-        <li class="links"><a href="/notices">Notices</a></li>
-        {{!-- <li class="links"><a href="#">Message</a></li> --}}
-        <li class="links"><a href="/logout">Logout</a></li>
+    <ul>
+        <a href="/"><img src="images/logo-light.png" class="small-logo" /></a>
+        <li class="links bi bi-people-fill"><a href="/teams"> Classes</a></li>
+        <li class="links bi bi-journal-text"><a href="/assignments"> Assignments</a></li>
+        <li class="links bi bi-table"><a href="/time-table"> Time Table</a></li>
+        <li class="links bi bi-bookmark"><a href="/notices"> Notices</a></li>
+        <li class="links bi bi-box-arrow-left"><a href="/logout"> Logout</a></li>
     </ul>
 </div>

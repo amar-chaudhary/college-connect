@@ -8,10 +8,27 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Home</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans&display=swap');
+
+        h1 {
+            font-family: 'Instrument Sans', sans-serif;
+        }
+
+        h2 {
+            font-family: 'Instrument Sans', sans-serif;
+        }
+
+        h3 {
+            font-family: 'Instrument Sans', sans-serif;
+        }
+
         .pop-container {
             padding: 10px;
             margin: 20px;
+            background-color: #030E81;
+            color: white;
             box-shadow: rgb(0 0 0 / 16%) 0px 3px 6px, rgb(0 0 0 / 23%) 0px 3px 6px;
+            border-radius: 10px;
         }
 
         .fields {}
@@ -29,10 +46,10 @@
         }
 
         button:hover {
-            opacity: 0.8;
+            opacity: 0.7;
         }
 
-        a{
+        a {
             color: white;
             text-decoration: none;
         }
@@ -50,16 +67,17 @@
                 <h2 class="fields">{{this.teamname}}</h2>
                 <h2 class="fields">{{this.title}}</h2>
                 <h4 class="fields">{{this.date}}</h4>
-                <form enctype="multipart/form-data" action="/room?id={{this.uqid}}"
-                        method="post">
-                         <button type='submit 'style="background-color:#030E81;color:white;">Join</button>
-                    </form> 
-               </div>
+                <form enctype="multipart/form-data" action="/room" method="get">
+                    <input type="text" name="id" style="display:none" value="{{this.uqid}}">
+                    <button type='submit ' style="background-color:white;color:#030E81;">Join</button>
+                </form>
+            </div>
             {{/each}}
             {{else}}
-            <h2>No Meetings</h2>
+            <h2 style="text-align: center; padding-top:250px;">No Meetings</h2>
             {{/if}}
         </div>
     </div>
 </body>
+
 </html>

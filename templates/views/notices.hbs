@@ -6,14 +6,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <title>Home</title>
 </head>
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans&display=swap');
+
+    h1 {
+        font-family: 'Instrument Sans', sans-serif;
+    }
+
+    h2 {
+        font-family: 'Instrument Sans', sans-serif;
+    }
+
+    h3 {
+        font-family: 'Instrument Sans', sans-serif;
+    }
+
     .box {
         margin: 10px;
-        width: 70%;
+        width: 95%;
         padding: 20px;
         border-radius: 10px;
+        color: white;
+        background: #030E81;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
     }
 
@@ -35,7 +52,7 @@
     .side-btn {
         display: block;
         padding: 10px 20px;
-        width: 50%;
+        width: 20%;
         margin: 20px auto;
         color: white;
         background: #030E81;
@@ -49,11 +66,22 @@
     }
 
     .text {
+        color: white;
+        background: #C0C2DF;
         width: 90%;
         display: block;
         margin: 10px auto;
         padding: 16px;
         text-align: center;
+        border-radius: 10px;
+        border-color: black;
+    }
+
+    ::placeholder {
+        /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: white;
+        opacity: 6 0%;
+        /* Firefox */
     }
 </style>
 
@@ -66,23 +94,23 @@
         {{/if}}
 
         <div id="content">
-                <h1 style="text-align: center;">NOTICES</h1>
-                {{#if teacher}}
-                <form action="/notices" method="post">
-                    <input class="text" type="text" name="message" placeholder="Type your message here.." required>
+            <h1 style="text-align: center;">Notices</h1>
+            {{#if teacher}}
+            <form action="/notices" method="post">
+                <input class="text" type="text" name="message" placeholder="Type your message here.." required>
 
-                    <button class="side-btn" type="submit">POST</button>
-                </form>
-                {{/if}}
-                {{#each rows}}
-                <div class="box">
-                    <div class="username">{{this.email}}</div>
-                    <div class="msg">{{this.msg}}</div>
-                    <div class="date">{{this.date}}</div>
-                </div>
+                <button class="side-btn bi bi-send" type="submit"> Post</button>
+            </form>
+            {{/if}}
+            {{#each rows}}
+            <div class="box">
+                <div class="username">{{this.email}}</div>
+                <div class="msg">{{this.msg}}</div>
+                <div class="date">{{this.date}}</div>
+            </div>
 
-                {{/each}}
-            
+            {{/each}}
+
 
         </div>
     </div>

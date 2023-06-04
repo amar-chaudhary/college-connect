@@ -146,7 +146,7 @@ app.get("/join", (req,res) => {
 // }   
 // })
 
-app.post('/room' , async (req, res) =>{
+app.get('/room' , async (req, res) =>{
     let stat = storage.getItem('status')
     mail = req.user.email
     let id = req.query.id;
@@ -162,6 +162,7 @@ app.post('/room' , async (req, res) =>{
         results = await executeSQL(sql2);
         if(results[0]){
             user_team = results[0].team_name;
+            console.log(user_team)
         }
     }
     else{
@@ -169,6 +170,7 @@ app.post('/room' , async (req, res) =>{
         results = await executeSQL(sql2);
         if(results[0]){
             user_team = results[0].team_name;
+            console.log(user_team)
         }
     }
     const sql3 = "select name from `userdetail` where email='"+mail+"'";

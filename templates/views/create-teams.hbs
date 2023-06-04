@@ -11,45 +11,55 @@
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans&display=swap');
+
+    h1 {
+        font-family: 'Instrument Sans', sans-serif;
+    }
+
     #form {
         text-align: center;
     }
 
-    #heading{
+    #heading {
         margin: 20px;
     }
 
-    .form-input{
-    padding: 10px;
+    .form-input {
+        padding: 10px;
     }
-    label{
-font-size: 20px;
-    margin: 10px;
+
+    label {
+        font-size: 20px;
+        margin: 10px;
     }
-    input{
-    padding: 10px 20px;
-    width: 200px;
+
+    input {
+        padding: 10px 20px;
+        width: 200px;
     }
-    .side-btn{
-       display: block;
-    padding: 10px 20px;
-    width: 50%;
-    margin: 40px auto;
-    color: white;
-    background: #030E81;
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    font-size: 14px;
-   }
-   .side-btn:hover{
-       cursor: pointer;
-   }
+
+    .side-btn {
+        display: block;
+        padding: 10px 20px;
+        width: 50%;
+        margin: 40px auto;
+        color: white;
+        background: #030E81;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        font-size: 14px;
+    }
+
+    .side-btn:hover {
+        cursor: pointer;
+    }
 </style>
 
 <body>
     <div class="container">
         {{>trnavbar}}
-        <div id="content">
+        <div id="content" style="padding-top: 10%;">
             <p id="email" style="display: none;">{{tremail}}</p>
             <form id="form">
                 <div id="form-inside">
@@ -59,18 +69,18 @@ font-size: 20px;
                         <input type="text" name="team-name" required placeholder="Team Name">
                     </div>
                     <div class="form-input">
-                        <label>Class Description</label>
-                    <input type="text" name="team-desc">
+                        <label>Class Description:</label>
+                        <input type="text" name="team-desc">
                     </div>
                     <div id="add-student" class="form-input">
-                        <label>Add Students</label>
+                        <label>Add Students:</label>
                         <input type="text" name="team-mem">
                     </div>
-                    
-                    
+
+
                 </div>
 
-                <button id="addMore"class="side-btn" >Add more Students</button>
+                <button id="addMore" class="side-btn">Add more Students</button>
                 <button id="create" class="side-btn" type="submit">Create</button>
             </form>
             <p id="message" style="text-align: center;font-size: 20px;color: green;"></p>
@@ -86,7 +96,7 @@ font-size: 20px;
             content.appendChild(ele);
         })
         const teacher = document.getElementById("email").textContent;
-        console.log("teacher email",teacher)
+        console.log("teacher email", teacher)
         document.getElementById("create").addEventListener("click", (e) => {
             e.preventDefault();
             teamName = document.getElementsByName("team-name")[0].value;
@@ -114,7 +124,7 @@ font-size: 20px;
                         return false;
                     });
             }
-            
+
             const teacherData = {
                 teamName,
                 teacher

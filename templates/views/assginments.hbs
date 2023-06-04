@@ -8,17 +8,34 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Home</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans&display=swap');
+
+        h1 {
+            font-family: 'Instrument Sans', sans-serif;
+        }
+
+        h2 {
+            font-family: 'Instrument Sans', sans-serif;
+        }
+
+        h3 {
+            font-family: 'Instrument Sans', sans-serif;
+        }
+
         .pop-container {
             padding: 10px;
             margin: 20px;
+            background-color: #030E81;
+            color: white;
             box-shadow: rgb(0 0 0 / 16%) 0px 3px 6px, rgb(0 0 0 / 23%) 0px 3px 6px;
+            border-radius: 10px;
         }
 
         .fields {}
 
         button {
-            background-color: #030E81;
-            color: white;
+            background-color: white;
+            color: #030E81;
             padding: 14px 20px;
             margin: 8px 0;
             border: none;
@@ -32,7 +49,7 @@
             opacity: 0.8;
         }
 
-        a{
+        a {
             color: white;
             text-decoration: none;
         }
@@ -51,14 +68,15 @@
                 <h2 class="fields">{{this.assignment-name}}</h2>
                 <h4 class="fields">{{this.assignment-desc}}</h4>
                 <h4 class="fields">Due Date : {{this.duedate}}</h4>
-                <form enctype="multipart/form-data" action="/assignment-upload?teamname={{teamname}}&assignName={{this.assignment-name}}" method="post">
+                <form enctype="multipart/form-data"
+                    action="/assignment-upload?teamname={{teamname}}&assignName={{this.assignment-name}}" method="post">
                     <input type="file" id="upload-assign" name="assignfile" required>
                     <button type=submit>Submit</button>
                 </form>
             </div>
             {{/each}}
             {{else}}
-            <h2>No Assignment</h2>
+            <h2 style="text-align: center; padding-top:250px;">No Assignment</h2>
             {{/if}}
         </div>
     </div>
