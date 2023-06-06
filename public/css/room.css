@@ -69,7 +69,7 @@
   background-color: #2aca3e;
 }
 
-.member_name{
+.member_name {
   font-size: 14px;
   line-height: 0;
 }
@@ -102,7 +102,7 @@
 }
 
 .message__body {
-  background-color: #bdbdbd ;
+  background-color: #bdbdbd;
   border-radius: 10px;
   padding: 10px 15px;
   width: fit-content;
@@ -114,7 +114,7 @@
   color: #ede0e0;
 }
 
-.message__body__bot{
+.message__body__bot {
   padding: 0 20px;
   max-width: 900px;
   color: #c;
@@ -123,13 +123,13 @@
 
 .message__author {
   margin-right: 10px;
-  color: #030E81!important;
+  color: #030E81 !important;
 
 }
 
 .message__author__bot {
   margin-right: 10px;
-  color: #a52aca!important;
+  color: #a52aca !important;
 
 }
 
@@ -175,26 +175,26 @@
   height: 100%;
 }
 
-#stream__box{
+#stream__box {
   background-color: #3f434a;
   height: 60vh;
   display: none;
 }
 
-#stream__box .video__container{
+#stream__box .video__container {
   border: 2px solid #bdbdbd;
   border-radius: 0;
-  height: 100%!important;
-  width:100%!important;
+  height: 100% !important;
+  width: 100% !important;
 
   background-size: 300px;
 }
 
-#stream__box video{
+#stream__box video {
   border-radius: 0;
 }
 
-#streams__container{
+#streams__container {
   display: flex;
   flex-wrap: wrap;
   gap: 2em;
@@ -204,11 +204,11 @@
   margin-bottom: 225px;
 }
 
-.video__container{
+.video__container {
   display: flex;
   justify-content: center;
   align-items: center;
-  border:2px solid #b366f9;
+  border: 2px solid #b366f9;
   border-radius: 50%;
   cursor: pointer;
   overflow: hidden;
@@ -220,17 +220,17 @@
   background-size: 75px;
 }
 
-.video-player{
+.video-player {
   height: 100%;
   width: 100%;
 }
 
-.video-player video{
+.video-player video {
   border-radius: 50%;
 }
 
 @media (max-width: 1400px) {
-  .video__container{
+  .video__container {
     height: 200px;
     width: 200px;
   }
@@ -256,6 +256,7 @@
     width: calc(100% - 20rem);
     left: 0;
   }
+
   #messages__container {
     max-width: 20rem;
   }
@@ -270,7 +271,7 @@
     width: 100%;
   }
 
-  .video__container{
+  .video__container {
     height: 100px;
     width: 100px;
   }
@@ -339,17 +340,17 @@
 }
 
 
-#join-btn{
+#join-btn {
   background-color: #030E81;
   font-size: 18px;
   padding: 25px 50px;
   border: none;
-  color:#fff;
+  color: #fff;
 
   position: fixed;
   bottom: 1rem;
   border-radius: 8px;
-  left:50%;
+  left: 50%;
   transform: translateX(-50%);
   cursor: pointer;
 }
