@@ -156,7 +156,6 @@ app.get('/room' , async (req, res) =>{
     let meeting_team = results[0].teamname;
     let user_team
     console.log(stat)
-    if(stat === 'student'){
         console.log(req.user)
         const sql2 = "select * from `study_on`where member='"+mail+"' and team_name='"+meeting_team+"'";
         results = await executeSQL(sql2);
@@ -164,15 +163,14 @@ app.get('/room' , async (req, res) =>{
             user_team = results[0].team_name;
             console.log(user_team)
         }
-    }
-    else{
-        const sql2 = "select * from `teaches_on`where email='"+mail+"' and team_name='"+meeting_team+"'";
-        results = await executeSQL(sql2);
-        if(results[0]){
-            user_team = results[0].team_name;
-            console.log(user_team)
-        }
-    }
+        else{
+            const sql2 = "select * from `teaches_on`where email='"+mail+"' and team_name='"+meeting_team+"'";
+            results = await executeSQL(sql2);
+            if(results[0]){
+                user_team = results[0].team_name;
+               console.log(user_team)
+            }
+         }
     const sql3 = "select name from `userdetail` where email='"+mail+"'";
     let lt =  await executeSQL(sql3); 
     let u_name = lt[0].name   
